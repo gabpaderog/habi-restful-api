@@ -1,0 +1,26 @@
+import js from '@eslint/js';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
+import { defineConfig } from 'eslint/config';
+
+export default defineConfig([
+  {
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],  
+    plugins: { js },
+    extends: ['js/recommended'],
+    languageOptions: {
+      globals: globals.node,
+    },
+    rules: {
+      semi: ['error', 'always'], // ⬅️ Enforce semicolons
+    },
+  },
+  {
+    files: ['**/*.ts'],
+    ...tseslint.configs.recommended[0], // Use TypeScript ESLint recommended
+    rules: {
+      ...tseslint.configs.recommended[0].rules,
+      semi: ['error', 'always'], // ⬅️ Also enforce semicolons in TypeScript files
+    },
+  },
+]);
